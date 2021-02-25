@@ -1,0 +1,13 @@
+.page-header{
+    position: sticky;            /* ヘッダーの固定 */
+    z-index:999;
+    padding: 10px;
+    top: 0px;                   /* 位置(上0px) */
+    left: 0px;                  /* 位置(右0px) */
+    width: 100%;                /* 横幅100%　*/
+    height: 50px;              /* 縦幅140px */
+    background-color: black;
+}
+ul.header_ul li{
+    display: inline;
+}
