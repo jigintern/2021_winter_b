@@ -3,9 +3,19 @@
 <head>
     <meta charset="utf-8">
     <title>投稿する</title>
+    <link rel="stylesheet" href="post.css">
 </head>
 <body>
-<input type="file" id="imgfile" multiple>
+    <div class="post-style">
+        <p>投稿したい写真を選ぼう！</p>
+        <p>ファイル選択をした後、</p>
+        <p>topに戻ってTLを見てみると…?</p>
+        <label for="imgfile">
+            <span>ファイルを選択</span>
+            <input type="file" id="imgfile" multiple>
+        </label>
+    </div>
+    <a href="index.html">top画面に戻る</a><br>
 <script type="module">
     import { ImageUploader } from "https://code4sabae.github.io/js/ImageUploader.js";
     import { fetchJSON } from "https://code4sabae.github.io/js/fetchJSON.js";

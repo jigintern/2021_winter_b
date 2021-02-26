@@ -1,0 +1,59 @@
+.post-style {
+  text-align: center;
+  width: 60vw;
+  padding: 1.5em 1em;
+  margin: auto;
+  background: #f4f4f4;
+  border-left: solid 6px #5bb7ae;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.33);
+  /*
+    color: #fff;
+    background-color: #114400;
+    margin: 10px 0 10px 0;
+    padding: 15px;
+    border: 9px solid #a60;
+    border-radius: 3px;
+    box-shadow: 2px 2px 4px #666, 2px 2px 2px #111 inset;
+    text-shadow: 0px 0px 2px #000;
+    line-height: 1.9;
+    */
+}
+
+.post-button {
+  text-align: center;
+  display: inline-block;
+}
+
+span {
+  display: block;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  font-family: “游ゴシック”, “Yu Gothic”;
+  background: #5bb7ae;
+  padding: 8px 0;
+  border-radius: 16px;
+  max-width: 240px;
+  text-align: center;
+  transition: 0.3s;
+  cursor: pointer;
+}
+span:hover {
+  background: #000;
+}
+
+input {
+  display: none;
+}
+
+a {
+  display: block;
+  margin-top: 10px;
+}
+
+p {
+  font-weight: bold;
+  font-size: 18px;
+  font-family: “游ゴシック”, “Yu Gothic”;
+  color: rgba(0, 0, 0, 0.33);
+}
