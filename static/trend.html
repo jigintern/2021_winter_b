@@ -1,29 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>トレンド</title>
+<meta charset="utf-8">
+<title>トレンド</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<!--
+<style>
+img {
+    height: 20vh;
+    display: block;
+}
+</style>
+-->
 </head>
 <body>
+
+<h1 class="bg-light p-3">トレンド</h1>
+<div id="list" class="row row-cols-1 row-cols-md-3 g-4 m-2"></div>
+<footer class="bg-light p-3"><a href="./">トップへもどる</a></footer>
+
 <script type="module">
-    import { fetchJSON } from "https://code4sabae.github.io/js/fetchJSON.js";
-    window.good = async (id) => {
-        await fetchJSON("/api/good", {"id": id});
-        location.reload();
-    };
-    window.onload = async () => {
-        document.write("トレンド<br><br>");
-        let resp = await fetchJSON("/api/trend", {});
-        for (let i = 0; i < resp.length; i++) {
-            document.write(
-                (i + 1) +"位<br>" +
-                "ID:" + resp[i].id + "<br>"
-                + "<img src='" + resp[i].url + "' width='128' height='128'><br>"
-                + "<button onclick='good(" + resp[i].id + ")'>" + resp[i].good + "いいね</button><br>"
-                + "<hr>"
-            );
-        }
-    };
+import { fetchJSON } from "https://code4sabae.github.io/js/fetchJSON.js";
+
+const create = (tag, cls, s) => {
+    const c = document.createElement(tag);
+    c.className = cls;
+    c.textContent = s;
+    return c;
+};
+
+window.onload = async () => {
+    let reloadcnt = 16; // 16回いいねを押す毎にリロード
+    const resp = await fetchJSON("/api/trend", {});
+    for (let i = 0; i < resp.length; i++) {
+        const cdiv = create("div", "col");
+        const div0 = create("div", "card h-100");
+        cdiv.appendChild(div0);
+        const div = create("div", "card-body");
+        div0.appendChild(div);
+        
+        div.appendChild(create("div", "card-text", (i + 1) +"位 ID:" + resp[i].id));
+        const img = new Image();
+        img.className = "card-img-top py-2 my-auto vh-50";
+        img.src = resp[i].url;
+        div.appendChild(img);
+        const footer = create("div", "card-footer");
+        div0.appendChild(footer);
+        const btn = create("a", "btn btn-primary", resp[i].good + "いいね");
+        btn.itemid = resp[i].id;
+        btn.onclick = async function () {
+            const res = await fetchJSON("/api/good", { "id": this.itemid });
+            console.log(res);
+            this.textContent = res + "いいね";
+            if (--reloadcnt == 0) {
+                location.reload();
+            }
+        };
+        footer.appendChild(btn);
+        list.appendChild(cdiv);
+    }
+};
 </script>
 </body>
 </html>

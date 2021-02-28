@@ -47,8 +47,7 @@ class MyServer extends Server {
             // タイムラインからIDで探して、いいねを1増やす
             for (let i = 0; i < db.timeline.length; i++) {
                 if (db.timeline[i].id === req.id) {
-                    db.timeline[i].good++;
-                    break;
+                    resp = ++db.timeline[i].good;
                 }
             }
         } else if (path === "/api/trend") {
