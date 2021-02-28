@@ -1,29 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>トレンド</title>
+<meta charset="utf-8">
+<title>トレンド</title>
+<style>
+#list img {
+    display: block;
+    height: 20vh;
+}
+</style>
 </head>
 <body>
+
+<h1>トレンド</h1>
+<div id="list"></div>
+
 <script type="module">
-    import { fetchJSON } from "https://code4sabae.github.io/js/fetchJSON.js";
-    window.good = async (id) => {
-        await fetchJSON("/api/good", {"id": id});
-        location.reload();
-    };
-    window.onload = async () => {
-        document.write("トレンド<br><br>");
-        let resp = await fetchJSON("/api/trend", {});
-        for (let i = 0; i < resp.length; i++) {
-            document.write(
-                (i + 1) +"位<br>" +
-                "ID:" + resp[i].id + "<br>"
-                + "<img src='" + resp[i].url + "' width='128' height='128'><br>"
-                + "<button onclick='good(" + resp[i].id + ")'>" + resp[i].good + "いいね</button><br>"
-                + "<hr>"
-            );
-        }
-    };
+import { fetchJSON } from "https://code4sabae.github.io/js/fetchJSON.js";
+
+const create = (tag, s) => {
+    const c = document.createElement(tag);
+    c.textContent = s;
+    return c;
+};
+
+window.onload = async () => {
+    let reloadcnt = 16; // 16回いいねを押す毎にリロード
+    const resp = await fetchJSON("/api/trend", {});
+    for (let i = 0; i < resp.length; i++) {
+        const div = create("div");
+        div.appendChild(create("div", (i + 1) +"位"));
+        div.appendChild(create("div", "ID:" + resp[i].id));
+        const img = new Image();
+        img.src = resp[i].url;
+        div.appendChild(img);
+        const btn = create("button", resp[i].good + "いいね");
+        btn.itemid = resp[i].id;
+        btn.onclick = async function () {
+            const res = await fetchJSON("/api/good", { "id": this.itemid });
+            console.log(res);
+            this.textContent = res + "いいね";
+            if (--reloadcnt == 0) {
+                location.reload();
+            }
+        };
+        div.appendChild(btn);
+        div.appendChild(create("hr"));
+        list.appendChild(div);
+    }
+};
 </script>
 </body>
 </html>
